@@ -52,6 +52,16 @@ with Matchers {
     assert(Interpreter.default.reduce(qNil) == SNil())
   }
 
+  "`let`" should "expand env with defined variables." in {
+    val expr = SList(Seq(
+      SSymbol("let"),
+      SList(Seq(
+        SList(Seq(SSymbol("x"), SNumber(5))))),
+      SList(Seq(SSymbol("+"), SSymbol("x"), SNumber(1)))))
+    
+    assert(Interpreter.default.reduce(expr) == SNumber(6))
+  }
+
   // Arithmetic operations
   "`+`" should "return sum of the given arguments" in {
     val sum = SList(Seq(
