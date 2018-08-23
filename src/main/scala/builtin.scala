@@ -112,7 +112,7 @@ object Interpreter {
   }))
 
 
-  default.env += (SSymbol("letrec") -> ((args: Seq[SExpr]) => {
+  default.env += (SSymbol("let*") -> ((args: Seq[SExpr]) => {
     if(args.size == 0)
       err("let: Invalid arguments.")
     else if(args.size < 2)
