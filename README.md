@@ -8,9 +8,9 @@ Scheme interpreter written in Scala, based on PC Scheme 2.0.
 
 #### Core builtin functions
 - [x] Function definitions, `define`
-- [x] Defining atoms with `quote`
-- [ ] `let` environment expander
-- [ ] `let*` incremental environment expander
+- [x] Quoting with `quote`
+- [x] `let` environment expander
+- [x] `let*` incremental environment expander
 - [ ] `letrec` recursive environment expander
 
 #### Conditional expressions
