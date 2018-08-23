@@ -4,11 +4,11 @@ Scheme interpreter written in Scala, based on PC Scheme 2.0.
 ### Development progress
 
 #### Core
-- [ ] Core interpreter
+- [x] Core interpreter
 
 #### Core builtin functions
-- [ ] Function definitions, `define`
-- [ ] Defining atoms with `quote`
+- [x] Function definitions, `define`
+- [x] Defining atoms with `quote`
 - [ ] `let` environment expander
 - [ ] `let*` incremental environment expander
 - [ ] `letrec` recursive environment expander
