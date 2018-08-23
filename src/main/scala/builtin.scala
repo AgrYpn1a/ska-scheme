@@ -91,7 +91,6 @@ object Interpreter {
       }
 
       val body = args(1)
-
       var localEnv = mutable.Map[SSymbol, SExpr]()
 
       varValPairs.foreach {
@@ -112,6 +111,38 @@ object Interpreter {
     }
   }))
 
+
+  default.env += (SSymbol("letrec") -> ((args: Seq[SExpr]) => {
+    if(args.size == 0)
+      err("let: Invalid arguments.")
+    else if(args.size < 2)
+      err("let: Missing body.")
+    else {
+      val varValPairs = args(0) match {
+        case s: SList => s.value
+        case _ => throw new Exception("Should never happen")
+      }
+
+      val body = args(1)
+      var localEnv = mutable.Map[SSymbol, SExpr]()
+
+      varValPairs.foreach {
+        x => x match {
+          case l: SList => l.value match {
+            case (s: SSymbol) :: (e: SExpr) :: Nil =>
+              localEnv += (
+                s -> Interpreter.default.reduce(subst(localEnv, e))
+              )
+            case _ => throw new Exception("Might want to handle this better")
+          }
+
+          case _ => throw new Exception("Might want to handle this better")
+        }
+      }
+
+      Interpreter.default.reduce(subst(localEnv, body))
+    }
+  }))
 
   /** 
    * Functions for working with numbers

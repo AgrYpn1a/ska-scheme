@@ -62,6 +62,19 @@ with Matchers {
     assert(Interpreter.default.reduce(expr) == SNumber(6))
   }
 
+  "`letrec`" should "incrementally expand env with defined variables." in {
+    val expr = SList(Seq(
+      SSymbol("letrec"),
+      SList(Seq(
+        SList(Seq(SSymbol("x"), SNumber(5))),
+        SList(Seq(SSymbol("y"), 
+          SList(Seq(SSymbol("+"), SNumber(1), SSymbol("x"))))
+      ))),
+      SList(Seq(SSymbol("+"), SSymbol("x"), SSymbol("y")))))
+
+    assert(Interpreter.default.reduce(expr) == SNumber(11))
+  }
+
   // Arithmetic operations
   "`+`" should "return sum of the given arguments" in {
     val sum = SList(Seq(
