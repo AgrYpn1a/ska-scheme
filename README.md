@@ -14,7 +14,7 @@ Scheme interpreter written in Scala, based on PC Scheme 2.0.
 - [ ] `letrec` recursive environment expander
 
 #### Conditional expressions
-- [ ] `if` expression
+- [x] `if` expression
 - [ ] `cond` expression
 
 #### Lists

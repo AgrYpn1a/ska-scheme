@@ -75,6 +75,22 @@ with Matchers {
     assert(Interpreter.default.reduce(expr) == SNumber(11))
   }
 
+  // (letrec ((x x)) ())
+  "`letrec`" should "fail on recursive variable usage" in {
+    val expr = SList(Seq(
+      SSymbol("letrec"),
+      SList(Seq(
+        SList(Seq(SSymbol("x"), SSymbol("x"))))),
+      SList(Seq(SSymbol("+"), SSymbol("x"), SNumber(1)))))
+
+    assert (Interpreter.default.reduce(expr) == err("x: undefined."))
+  }
+
+  // 
+  "`letrec`" should "allow recursive function definitions" in {
+    val rExp = SList(Seq())
+  }
+
   // Arithmetic operations
   "`+`" should "return sum of the given arguments" in {
     val sum = SList(Seq(
@@ -114,6 +130,13 @@ with Matchers {
 
   "`+`" should "error on invalid argument" in {
     assert (true == false)
+  }
+
+  "`=`" should "eval to true in these cases." in {
+    assert(Interpreter.default.reduce(
+      SList(Seq(SSymbol("="), SSymbol("x"),SSymbol("x")))) == STrue)
+    assert(Interpreter.default.reduce(
+      SList(Seq(SSymbol("="), SNumber(31), SNumber(31)))) == STrue)
   }
 
 }

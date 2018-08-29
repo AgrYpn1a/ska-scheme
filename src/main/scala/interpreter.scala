@@ -9,6 +9,19 @@ package object skascheme {
   def err(s: String): SList = 
     SList(Seq(SSymbol("error"), SString(s)))
 
+  def isErr(e: SExpr): Boolean = e match {
+    case l: SList => l.value match {
+      case x :: xs => x match {
+        case s: SSymbol if s.value.equals("error") => true
+        case _ => false
+      }
+
+      case _ => false
+    }
+
+    case _ => false
+  }
+
   def ok: SList = SList(Seq(SSymbol("ok")))
 
   // Binds variables from expression to their values
@@ -49,4 +62,11 @@ package object skascheme {
     }
   }
 
+  object Interpreter {
+    val default = new Interpreter(mutable.Map())
+  }
+
+  // Init all modules
+  Core
+  Conditionals
 }
